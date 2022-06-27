@@ -1,70 +1,88 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
+# render content
+### О задание
+***
+Отобразить UI на основе данных, которые вводит пользователь.
+### Доступные скрипты
+***
 ### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
+Запуск приложения
 ### `npm test`
+Запуск тестов
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Описание
+***
+В поле «Путь» вводим строку, в которой задаем путь внутри объекта. 
+Формат вводимых данных: 'content[2].props.caption', "content[2].props.caption", content[2].props.caption. 
+«Путь» также валидируется, если ввести ошибочный путь, то данное поле будет подсвечено. Например: content[2].test
 
-### `npm run build`
+В поле «Новое значение» указываем новое значение данного свойства. 
+Формат вводимых данных:
++ Строка: 'test', "test", test. 
++ Число: 111. 
++ Объект: 
+```js
+{'test': value}
+{test: value}
+{"test": value}
+```
+«Новое значение» также валидируется в зависимости от компонета, к которому применяется новое значение.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Примеры задания допустимого контента
+***
+```js
+// добавляет объект в content
+Путь: 
+Новое значение: {type: "panel",props:{width:123}, content: [{type: "label", props:{caption:"12445"}}]} 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+// добавляет объект в content
+Путь: content
+Новое значение: {type: "panel",props:{width:123}, content: [{type: "label", props:{caption:"12445"}}]} 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+// Добавит массив объектов в content
+Путь: 
+Новое значение: [{type: "panel",props:{width:123}, content: [{type: "label", props:{caption:"12445"}}]}]
 
-### `npm run eject`
+//Если content[0] это компонент panel, то добавит объект в его content
+Путь: content[0].content 
+Новое значение:{type: "panel",props:{width:123}, content: [{type: "label", props:{caption:"12445"}}]}
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+//Если content[0] это компонент panel, то добавит массив объектов в его content
+Путь: content[0].content 
+Новое значение:[{type: "panel",props:{width:123}, content: [{type: "label", props:{caption:"12445"}}]}]
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+//Изменит объект props у компонента, если даное свойство есть у компонента и новое значение валидно
+Путь: content[0].props
+Новое значение: {width: 123}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+//Изменит свойство props компонента, если даное свойство есть у компонента и новое значение валидно
+Путь: content[0].props.width
+Новое значение: 123
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Примеры задания недопустимого контента
+***
+```js
+// Ошибка, так как в свойстве width строка  
+Путь: 
+Новое значение: {type: "panel",props:{width:'123'}, content: [{type: "label", props:{caption:"12445"}}]} 
 
-## Learn More
+// Если content[1] не компонент panel, то будет ошибка
+Путь: content[1].content
+Новое значение: {type: "panel",props:{width:123}, content: [{type: "label", props:{caption:"12445"}}]}
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+//Если у компонента content[0] нет свойства width, то будет ошибка
+Путь: content[0].props
+Новое значение: {width:123}
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+//Ошибка, так как в свойстве width строка
+Путь: content[0].props
+Новое значение: {width:}
 
-### Code Splitting
+//Ошибка, так как нет такого типа, как test
+Путь: content[0].type
+Новое значение: test
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+//Ошибка, так как в свойстве width строка
+Путь: content[0].props.width
+Новое значение: '123'
+```

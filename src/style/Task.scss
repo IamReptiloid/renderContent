@@ -1,0 +1,35 @@
+.task {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+
+    &__form {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 20px;
+    }
+    &__input {
+        border: 1px;
+        border-radius: 2px;
+        padding: 2px;
+        display: block;
+        width: 100%
+    }
+
+    &__board {
+        height: 50vh;
+        border: 1px solid black;
+        background-color: white;
+        overflow: auto;
+    }
+
+    &__label {
+        margin-right: 20px;
+        width: 50%;
+    }
+
+}
+
+.error {
+    border: 1px solid red;
+}
